@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="./node_modules/localforage/dist/localforage.js"></script>
+        <script src="./node_modules/seedrandom/seedrandom.js"></script>
+        <script src="./FifoLocalForage.js"></script>
+        <script src="./sleep.js"></script>
+        <title>FifoQueue</title>
+        <style>
+            body {
+                font-family: Helvetica;
+                background-color: rgb(199, 199, 181);
+
+                text-align: center;
+            }
+        </style>
+        <script>
+            async function main() {
+                const fifoQueue = new Queue('Bob');
+                for (let i = 0; i < 5; i++) {
+                    const timeOut = Math.floor(Math.random() * 100) + 100;
+                    const seed = new Math.seedrandom('randomWord' + i);
+                    const shouldRecieve = Math.floor(seed() * 300);
+                    await sleep(timeOut);
+                    const data = await fifoQueue.pop_tail();
+                    if (data != shouldRecieve) {
+                        console.log({ data, shouldRecieve, error: 'error' });
+                    } else {
+                        console.log({ data, correct: 'correct' });
+                    }
+                }
+            }
+            main();
+        </script>
+    </head>
+    <body>
+        <div></div>
+        <h1>FifoQueue implemented on localforage</h1>
+        <h2>RECIEVE</h2>
+        <button onclick="{localforage.clear()}">Clear localforage</button>
+    </body>
+</html>
