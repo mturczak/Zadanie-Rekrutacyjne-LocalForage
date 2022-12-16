@@ -11,15 +11,17 @@ class Queue {
     }
 
     async tail() {
-        const result = await localforage.getItem(this.name + 'Tail').then((value) => {
+        const result = localforage.getItem(this.name + 'Tail').then((value) => {
             return value;
         });
         return result;
     }
     async head() {
-        const item = await localforage.getItem(this.name + 'Head');
+        const result = await localforage.getItem(this.name + 'Head').then((value) => {
+            return value;
+        });
 
-        return item;
+        return result;
     }
 
     async getElementWithKey(key) {
