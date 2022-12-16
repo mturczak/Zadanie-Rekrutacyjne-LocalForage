@@ -3,9 +3,9 @@ class Queue {
         this.name = name;
         this.headFieldPointer = null;
         this.tailFieldPointer = null;
-        this.start();
+        this.setHeadTailFieldPointers();
     }
-    async start() {
+    async setHeadTailFieldPointers() {
         this.headFieldPointer = await this.getElementWithKey('Head');
         this.tailFieldPointer = await this.getElementWithKey('Tail');
     }
@@ -103,11 +103,5 @@ class Queue {
         } catch (err) {
             console.log(err);
         }
-    }
-
-    async getLastIndex() {
-        const item = await localforage.getItem(this.name + 'LastIndex');
-
-        return item;
     }
 }
